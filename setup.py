@@ -1,7 +1,14 @@
+import os
+
 from setuptools import setup, find_packages
 
 
-# 读取 requirements.txt
+def read_long_description():
+    readme_path = os.path.join(os.path.dirname(__file__), "README.md")
+    with open(readme_path, encoding="utf-8") as f:
+        return f.read()
+
+
 def read_requirements():
     with open("src/gatling/requirements.txt", encoding="utf-8") as f:
         return [line.strip() for line in f if line.strip() and not line.startswith("#")]
@@ -11,6 +18,7 @@ setup(
     name="gatling",
     version="0.1.0",
     description="A high-performance parallel task processing framework for solving IO-bound (Redis queue, file system, command execution) and CPU-bound (computation) workloads. Designed for scalability, efficiency, and seamless distributed execution.",
+    long_description=read_long_description(),
     author="MacroMozilla",
     author_email="honyzeng7@gmail.com",
     license="BSD-3-Clause",
@@ -25,4 +33,3 @@ setup(
         "Repository": "https://github.com/MacroMozilla/gatling",
     },
 )
-
