@@ -1,0 +1,22 @@
+# Python 缓存文件
+__pycache__/
+*.pyc
+*.pyo
+
+# 构建/打包目录
+build/
+dist/
+*.egg-info/
+*.whl
+*.tar.gz
+
+# IDE / 编辑器配置
+.idea/
+.vscode/
+.DS_Store
+
+# 日志文件
+*.log
+
+# 其他不必要的文件
+cmd.txt
