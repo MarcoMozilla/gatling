@@ -1,5 +1,7 @@
 import json
+import os
 import pickle
+import shutil
 from typing import Any, List, Union
 import numpy as np
 import pandas as pd
@@ -136,3 +138,15 @@ def read_pickle(filename: str) -> Any:
     """
     with open(filename, 'rb') as file:
         return pickle.load(file)
+
+
+def rmdir(fpath):
+    """删除目录（如果存在）"""
+    if os.path.exists(fpath):
+        shutil.rmtree(fpath)
+
+
+def rmfile(fname):
+    """删除文件或目录"""
+    if os.path.exists(fname):
+        os.remove(fname)  # 删除文件
