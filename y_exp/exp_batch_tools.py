@@ -24,7 +24,7 @@ def heavy_io_task(a: float, b: float = 0.0) -> float:
 if __name__ == '__main__':
     pass
     # 定义任务数量
-    task_numbers = [10, 50, 100, 500, 1000, 5000, 10000][:3]
+    task_numbers = [10, 25, 50, 75, 100, 250, 500, 1000, 5000, 10000][:6]
     executors = {
         "forloop": batch_execute_forloop,
         "process": batch_execute_process,
@@ -77,4 +77,6 @@ if __name__ == '__main__':
     axs[1].grid(True)
 
     plt.tight_layout()
-    plt_show()
+    # plt_show()
+    plt.savefig("../x_figs/evaluation_speed_for_batch_tools.png")
+    plt.close()

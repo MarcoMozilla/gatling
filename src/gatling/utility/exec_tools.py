@@ -1,8 +1,9 @@
 import subprocess
 import os
+from typing import Optional
 
 
-def execute_commands(cmds, block=True):
+def execute_commands(cmds, block=True)-> Optional[subprocess.Popen]:
     """
     Executes a list of commands in a new cmd window and optionally blocks until they complete.
 
@@ -49,7 +50,7 @@ def execute_commands(cmds, block=True):
         return None
 
 
-def run_python_script(script_path: str, script_args: str, block=True):
+def run_python_script(script_path: str, script_args: str, block=True)-> Optional[subprocess.Popen]:
     """
     Executes a Python script in a new cmd window with an optional virtual environment activation.
 
@@ -84,27 +85,23 @@ def run_python_script(script_path: str, script_args: str, block=True):
         return None
 
 
-def kill_process(pid):
+def kill_process(pid: int) -> int:
     """
     Kills a process and all its child processes using taskkill via os.system.
 
     Args:
         pid (int): The PID of the process to terminate.
+
+    Returns:
+        int: The exit code from os.system. 0 means success, non-zero means failure.
     """
     try:
-        # 构造 taskkill 命令
         command = f"taskkill /PID {pid} /F /T"
-
-        # 使用 os.system 执行命令
-        result = os.system(command)
-
-        # 判断返回码
-        if result == 0:
-            print(f"Successfully killed PID {pid} and its child processes.")
-        else:
-            print(f"Failed to kill PID {pid}.")
+        result: int = os.system(command)  # 显式声明 result 为 int 类型
+        return result
     except Exception as e:
         print(f"An error occurred while killing the process: {e}")
+        return -1  # 返回 -1 代表异常
 
 
 # CMD_cd_root = f'cd {preset.}'
