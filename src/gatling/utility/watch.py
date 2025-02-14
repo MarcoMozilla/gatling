@@ -6,14 +6,15 @@ import pandas as pd
 class Watch:
     def __init__(self, fctn=pd.Timestamp.now):
         self.fctn = fctn
-        self.tick = self.fctn()
+        self.cur_timestamp = self.fctn()
         self.records = []
+        self.see_timedelta()
 
     def see_timedelta(self):
-        tick = self.fctn()
-        res = tick - self.tick
+        now_timestamp = self.fctn()
+        res = now_timestamp - self.cur_timestamp
         self.records.append(res)
-        self.tick = tick
+        self.cur_timestamp = now_timestamp
         return res
 
     def see_seconds(self):
@@ -25,6 +26,14 @@ class Watch:
 
     def total_seconds(self):
         return round(self.total_timedelta().total_seconds(), 6)
+
+    def check_timedelta(self):
+        now_timestamp = self.fctn()
+        res = now_timestamp - self.cur_timestamp
+        return res
+
+    def check_seconds(self):
+        return round(self.check_timedelta().total_seconds(), 6)
 
 
 def watch_time(func):

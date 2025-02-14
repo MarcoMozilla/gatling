@@ -88,6 +88,24 @@ def save_numpy(data: np.ndarray, filename: str) -> None:
     np.save(filename, data)
 
 
+def delete_text(filename: str) -> bool:
+    """
+    删除指定的文本文件。
+    如果文件存在，则删除文件并打印提示信息，返回 True；
+    如果文件不存在，则打印提示信息，返回 False。
+
+    :param filename: 要删除的文件名。
+    :return: 删除成功返回 True，文件不存在返回 False。
+    """
+    try:
+        os.remove(filename)
+        print(f"文件已删除: {filename}")
+        return True
+    except FileNotFoundError:
+        print(f"文件不存在: {filename}")
+        return False
+
+
 def read_numpy(filename: str) -> np.ndarray:
     """
     从文件中读取NumPy数组（.npy格式）。

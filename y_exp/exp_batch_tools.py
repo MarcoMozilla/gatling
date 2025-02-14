@@ -9,7 +9,7 @@ from a_plot_tools import *
 
 
 def heavy_cpu_task(a: float, b: float = 0.0) -> float:
-    N = 10 ** 4
+    N = 1024 ** 2
     total = 0.0
     for i in range(N):
         total += a * b
@@ -24,7 +24,7 @@ def heavy_io_task(a: float, b: float = 0.0) -> float:
 if __name__ == '__main__':
     pass
     # 定义任务数量
-    task_numbers = [10, 25, 50, 75, 100, 250, 500, 1000, 5000, 10000][:6]
+    task_numbers = [10, 25, 50, 75, 100, 250, 500, 1000, 5000, 10000][:]
     executors = {
         "forloop": batch_execute_forloop,
         "process": batch_execute_process,
