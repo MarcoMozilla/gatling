@@ -1,7 +1,7 @@
 import json
 from typing import Union
 
-from a_databasetool.redis_base import get_redis_master
+from databasetool.redis_base import get_redis_master
 from utility.watch import watch_time
 
 

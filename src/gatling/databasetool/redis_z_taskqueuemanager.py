@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 from tqdm import trange
 
-from a_databasetool.redis_tool import RedisQueue, RedisDctn
+from databasetool.redis_tool import RedisQueue, RedisDctn
 from utility.batch_tools import K_kwargs
 from utility.const import K_uid, K_args, K_result
 from utility.decorator_tools import show_process_and_thread_id

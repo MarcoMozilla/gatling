@@ -3,8 +3,8 @@ import os
 import random
 import time
 
-from a_databasetool.redis_base import get_redis_master
-from a_databasetool.redis_z_taskqueuemanager import RedisTaskQueueManager
+from databasetool.redis_base import get_redis_master
+from databasetool.redis_z_taskqueuemanager import RedisTaskQueueManager
 from utility.const import K_args
 from utility.exec_tools import run_python_script, get_pids_by_cmd, kill_process
 
