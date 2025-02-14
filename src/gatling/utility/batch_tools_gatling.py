@@ -18,6 +18,8 @@ from utility.io_tools import save_text, delete_text
 from pathlib import Path
 from typing import Callable
 
+from utility.watch import watch_time
+
 
 def rename_fname(fpath_caller: str, rename_func: Callable[[str], str]) -> str:
     """
@@ -90,7 +92,8 @@ def get_calling_filename(offset: int = 1) -> str:
     return os.path.realpath(caller_frame_info.filename)
 
 
-def batch_execute_gatling(func: CallableJson, args_kwargs_s: List[Dict[str, Any]], redis_master: object = None, workers: object = None, check_interval=5) -> List[TypeJson]:
+@watch_time
+def batch_execute_gatling(func: CallableJson, args_kwargs_s: List[Dict[str, Any]], redis_master: object = None, workers: object = None, check_interval=5, delete_redis_result=True) -> List[TypeJson]:
     if redis_master is None:
         redis_master = get_redis_master('127.0.0.1', 6379)
     if workers is None:
@@ -101,15 +104,15 @@ def batch_execute_gatling(func: CallableJson, args_kwargs_s: List[Dict[str, Any]
     rtqm_for_task.reset()
     rtqm_for_task.push_waiting(args_kwargs_s)
 
-    print(func.__name__)
-
-    fname_caller = get_calling_filename(offset=2)
+    fname_caller = get_calling_filename(offset=3)
     fpath_caller = os.path.realpath(fname_caller)
-    print(fpath_caller)
+
+    print(f"[fctn] {func.__name__}")
+    print(f"[fpath] {fpath_caller}")
 
     sent_code_including_function = extract_code_including_function(func.__name__, fpath_caller)
-    print("##### make gatling script #####")
-    print(sent_code_including_function)
+    # print("##### make gatling script #####")
+    # print(sent_code_including_function)
 
     sent_code_full_script = f"""
 {sent_code_including_function}    
@@ -147,4 +150,7 @@ if __name__ == '__main__':
     delete_text(fpath_caller_gatling)
 
     res = rtqm_for_task.fetch_result()
+
+    if delete_redis_result:
+        res.delete()
     return res

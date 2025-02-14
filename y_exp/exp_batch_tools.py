@@ -2,6 +2,7 @@ import random
 import time
 
 from utility.batch_tools import batch_execute_forloop, batch_execute_process, batch_execute_thread
+from utility.batch_tools_gatling import batch_execute_gatling
 from utility.const import K_args
 from utility.watch import Watch
 
@@ -24,11 +25,12 @@ def heavy_io_task(a: float, b: float = 0.0) -> float:
 if __name__ == '__main__':
     pass
     # 定义任务数量
-    task_numbers = [10, 25, 50, 75, 100, 250, 500, 1000, 5000, 10000][:]
+    task_numbers = [128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768][:]
     executors = {
         "forloop": batch_execute_forloop,
         "process": batch_execute_process,
         "thread": batch_execute_thread,
+        "gatling": batch_execute_gatling,
     }
 
     # 记录运行时间
@@ -59,7 +61,7 @@ if __name__ == '__main__':
     # CPU-bound task execution time (log scale)
     axs[0].set_yscale("log")
     for name, times in cpu_task_times.items():
-        axs[0].plot(task_numbers, times, marker='o', label=name)
+        axs[0].plot(task_numbers[:len(times)], times, marker='o', label=name)
     axs[0].set_xlabel("Number of Tasks")
     axs[0].set_ylabel("Execution Time (seconds)")
     axs[0].set_title("CPU-bound Task Execution Time")
@@ -69,7 +71,7 @@ if __name__ == '__main__':
     # IO-bound task execution time (log scale)
     axs[1].set_yscale("log")
     for name, times in io_task_times.items():
-        axs[1].plot(task_numbers, times, marker='o', label=name)
+        axs[1].plot(task_numbers[:len(times)], times, marker='o', label=name)
     axs[1].set_xlabel("Number of Tasks")
     axs[1].set_ylabel("Execution Time (seconds)")
     axs[1].set_title("IO-bound Task Execution Time")
